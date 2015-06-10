@@ -44,6 +44,9 @@ BasicGame.Game.prototype = {
             fill: "#000000",
             align: "center"
         });
+        this.music = this.add.audio('sound',1,true);
+        this.eat = this.add.audio('eat',1);
+        this.music.play();
         this.cursors = this.input.keyboard.createCursorKeys();
     },
     /*update the game every second*/
@@ -77,7 +80,9 @@ BasicGame.Game.prototype = {
     },
     /*Set the background image to the game*/
     setBackground:function(){
-        this.background = this.add.tileSprite(0,0, 1200, 2000, 'preloaderBackground');
+        this.background = this.add.sprite(0,0,'preloaderBackground');
+        this.background.height = this.world.height;
+        this.background.width = 2000;
     },
     /*Add plataform to the game, this method is callled from create*/
     addPlataforms:function(){
@@ -154,6 +159,7 @@ BasicGame.Game.prototype = {
         this.physics.arcade.overlap(this.pig, this.corns, this.setPoints, null, this);
     },
     setPoints:function(pig, corn){
+        this.eat.play();
         this.score++;
         corn.kill();
     },
@@ -167,6 +173,7 @@ BasicGame.Game.prototype = {
     },
     /*Close the game and redirect to the main menu*/
     quitGame: function (pointer) {
+        game.paused = true;
         this.state.start('MainMenu');
     }
 };

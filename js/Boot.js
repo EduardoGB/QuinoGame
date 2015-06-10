@@ -31,7 +31,7 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
-        this.load.image('preloaderBackground', 'img/cielo.png');
+        this.load.image('preloaderBackground', 'img/back.png');
         this.load.image('loader', 'img/load.png');
     },
 

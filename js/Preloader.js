@@ -6,9 +6,9 @@ BasicGame.Preloader = function (game) {
 
 BasicGame.Preloader.prototype = {
     preload: function () {
-        this.background = this.add.sprite(0, 0, 'preloaderBackground');
-        this.background.scale.x =5;
-        this.background.scale.y =2;
+        this.background = this.add.tileSprite(0, 0,1200,1200, 'preloaderBackground');
+        // this.background.width = this.world.width;
+        // this.background.height =this.world.height;
         
         this.preloadBar = this.add.sprite(450, 200, 'loader');
         
@@ -17,6 +17,7 @@ BasicGame.Preloader.prototype = {
         this.load.image('corn', 'img/corn.png');
         this.load.spritesheet('pig','img/pig2.png', 40, 40);
         this.load.audio('sound', ['audio/back.wav']);
+        this.load.audio('eat', ['audio/comer.wav']);
 
     },
     create: function () {
