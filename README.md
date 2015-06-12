@@ -1,6 +1,7 @@
 # QuinoGame
 Juego base de perroQuino
-Detalles generales.
+
+Descripción general del juego:
 
   SECCIONES
   
