@@ -12,6 +12,7 @@ Descripción general del juego:
     5.-Compartir.
     
   Controles del juego.
+  
     1.-Flecha-izquierda
     2.-Flecha-derecha
     3.-Flecha-Arriba
