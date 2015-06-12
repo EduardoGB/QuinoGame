@@ -11,7 +11,7 @@ Descripción general del juego:
     4.-Lista de posición.
     5.-Compartir.
     
-  Controles del juego.
+  CONTROLES DEL JUEGO
   
     1.-Flecha-izquierda : Disminuye la velocidad, nunca detiene completamente al jugador y una vez que bajo de velocidad muestra iconografia para utilizar algun poder.
     2.-Flecha-derecha : Avanza sobre adelante con mayor velocidad.
