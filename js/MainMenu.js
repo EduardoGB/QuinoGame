@@ -6,10 +6,9 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.prototype = {
     create: function () {
-         this.backgroundh = this.add.sprite(0, 0, 'preloaderBackground');
-        this.backgroundh.scale.x =.7;
-        this.backgroundh.scale.y =.7;
-        
+        this.background = this.add.sprite(0,0,'preloaderBackground');
+        this.background.height = this.world.height;
+        this.background.width = this.world.width;
         this.music = this.add.audio('sound',1,true);
         // this.music.play();
 

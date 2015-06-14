@@ -20,7 +20,7 @@ BasicGame.Boot.prototype = {
             this.scale.pageAlignVertically = false;
         } else {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            this.scale.setMinMax(480, 260, 1024, 768);
+            this.scale.setMinMax(480, 260, window.screen.width, window.screen.height);
             this.scale.pageAlignHorizontally = false;
             this.scale.pageAlignVertically = false;
             this.scale.forceOrientation(true,false);

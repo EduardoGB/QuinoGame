@@ -2,8 +2,9 @@
 BasicGame.Game = function (game) {
     //Set basic const params to general game
     /******Plataforms***++***********/
-    this.plataformYPosition = 1200;
-    this.plataformXPosition = 1200;
+    this.lastPlatformPosition= 600;
+    this.plataformYPosition = 600;
+    this.plataformXPosition = 600;
     this.plataformChange    = 190;
     this.plataformHeight    = 50;
     this.plataformWidth     = 200;
@@ -11,30 +12,32 @@ BasicGame.Game = function (game) {
     this.plataformsNum      = 6;
     this.diff               = 0;
     /******Score points**************/
-
+    this.score              = 0;
     /******General game**************/
-    this.globalGravity      = 100;  
+    this.height             = 0;
+    this.globalGravity      = 150;  
     this.gameCount          = 0;
     this.velocity           = 100;
-    this.score              = 0;
     /******Player*++++++*************/
     this.playerJumped       = false;
     /*******Camera*******************/
-    this.cameraY            = 900;
+    this.cameraY            = 400;
+    this.cameraX            = 0;
 
 };
 
 BasicGame.Game.prototype = {
     /*Init the game*/
     create: function () {
+        this.height = this.world.height;
         this.physics.startSystem(Phaser.Physics.P2JS);
-        this.world.setBounds(0,0,0,2000);
+        this.world.setBounds(0,0,2000000000,this.height);
         this.physics.arcade.gravity.y = this.globalGravity;
         this.setBackground();
         this.resetVars();
         this.addPlataforms();
         this.addPlayer();
-        this.scoreText = this.add.text(this.world.centerX, this.world.centerY, "", {
+        this.scoreText = this.add.text(this.pig.x-200, 10, "", {
             font: "30px gecko",
             fill: "#000000",
             align: "center"
@@ -46,45 +49,56 @@ BasicGame.Game.prototype = {
         });
         this.music = this.add.audio('sound',1,true);
         this.eat = this.add.audio('eat',1);
-        this.music.play();
+        // this.music.play();
+        // this.playButton = this.add.button(100, 200, 'playButton', this.quitGame);
         this.cursors = this.input.keyboard.createCursorKeys();
     },
     /*update the game every second*/
     update: function () {
         this.scoreText.setText(this.score+" points");
+        this.scoreText.x = this.pig.x-200;
+
         this.timeText.setText(this.gameCount);
         this.addCorns();
         this.setVelocity();
         this.setMoves();
         this.setCamera();
-
-        if(this.pig.body.touching.down){
-            this.pig.body.velocity.x = this.velocity;
-        }else{
-            this.pig.body.gravity.y = this.globalGravity+300;
-            this.pig.body.velocity.x = 0;
-        }
         
+        this.pjump();
+        this.pleft();
+        this.prigth();
+
+        this.platforms.forEach(this.wrapPlatform, this); 
+    },
+    pjump:function() {
+        if(!this.pig.body.touching.down){
+            this.pig.body.gravity.y = this.globalGravity + 300;    
+        }
         if (this.cursors.up.isDown && this.pig.body.touching.down ) {
             this.pig.body.velocity.y = -250;
-            this.pig.body.velocity.x = 0;
-        } 
-    },
-    addCorns:function(){
-        if(this.gameCount%30 == 0){
-            this.corns.create(1200, this.plataformYPosition - 50, 'corn');
         }
+    },
+    pleft:function() {
+        if (this.cursors.left.isDown && this.pig.body.touching.down) {
+            this.pig.body.velocity.x = 100;
+        }
+    },
+    prigth:function() {
+        if (this.cursors.right.isDown && this.pig.body.touching.down) {
+            this.pig.body.velocity.x = this.velocity + 800;
+        }
+    },
+    addCorns:function(x,y) {
+        this.corns.create(x,y, 'corn');
         this.corns.setAll('body.allowGravity', false);
         this.corns.setAll('body.immovable', true);
         this.corns.setAll('body.velocity.x', -this.velocity);
     },
-    /*Set the background image to the game*/
-    setBackground:function(){
-        this.background = this.add.sprite(0,0,'preloaderBackground');
-        this.background.height = this.world.height;
-        this.background.width = 2000;
+    setBackground:function() {
+        this.background         = this.add.sprite(0,0,'preloaderBackground');
+        this.background.height  = this.world.height;
+        this.background.width   = 2000;
     },
-    /*Add plataform to the game, this method is callled from create*/
     addPlataforms:function(){
         this.platforms  = this.add.physicsGroup();
         this.corns      = this.add.physicsGroup();
@@ -95,85 +109,69 @@ BasicGame.Game.prototype = {
 
         this.platforms.setAll('body.allowGravity', false);
         this.platforms.setAll('body.immovable', true);
-        this.platforms.setAll('body.velocity.x', -this.velocity);
     },
-    /*Add the player data, this methos is called from create*/
     addPlayer:function(){
-        this.pig = this.add.sprite(300, 800, 'pig');
+        this.pig = this.add.sprite(500, 400, 'pig');
         this.physics.enable( [ this.pig ], Phaser.Physics.ARCADE);
-        this.pig.animations.add('walk',[0,1],5,true);
+        this.pig.animations.add('walk',[0,1],10,true);
         this.pig.play('walk');
         this.pig.scale.setTo(2,2)
         this.pig.body.gravity.y = this.globalGravity;
     },
     /*Reset variable needed to the game, this method is called from create*/
     resetVars:function(){
-        this.plataformYPosition = 1200;
-        this.plataformXPosition = 1200;
-        this.globalGravity      = 100;  
-        this.gameCount          = 0;
-        this.velocity           = 100;
-        this.cameraY            = 900;
+        // this.plataformYPosition = 400;
+        // this.plataformXPosition = 400;
+        // this.globalGravity      = 100;  
+        // this.gameCount          = 0;
+        // this.velocity           = 100;
+        // this.cameraY            = 900;
     },
     /*Check if the plataform move is less than the configuration then set a new position*/
     wrapPlatform: function (platform) {
-        if (platform.x <= -this.plataformChange) {
+        if (platform.x <= (this.pig.x - 200-this.plataformChange)) {
             if(this.plataformCount >= this.plataformsNum){
                 var rand = Math.round(Math.random() * 100);
-                if(rand%2==0 && platform.y > 500){
+                if(rand%2==0 && platform.y > 400){
                     this.diff = -1;
-                } else if(platform.y < 1500){
+                } else if(platform.y < 500){
                     this.diff = 1;
                 }
                 this.plataformYPosition += (this.diff * this.plataformHeight);
                 this.plataformCount=1;
             }
-            this.plataformCount++;
-            var plataformDiff = Math.abs(this.plataformChange + platform.x);
-            platform.x = this.plataformXPosition-plataformDiff;
+            var index = ((platform.z) == 1) ? this.platforms.children.length : platform.z -1 ;  
+            var x = this.platforms.children[index-1].x + this.plataformWidth;
+            this.addCorns(x+10,platform.y-30);
+            this.plataformCount ++;
+            platform.x = x;
             platform.y = this.plataformYPosition;
         }    
     },
     /*Move the camera acord the player and the plataform than it is touching*/
     setCamera:function(){
-        if(this.pig.body.touching.down){
-            if(this.cameraY != ((this.pig.y + this.pig.height) -300)) {
-                if(this.cameraY < ((this.pig.y + this.pig.height) -300)){
-                    this.cameraY += .5;
-                    this.scoreText.y+=.5;
-                    this.timeText.y+=.5;
-                }else if(this.cameraY > ((this.pig.y + this.pig.height) -300)){
-                    this.cameraY -= .5;
-                    this.scoreText.y-=.5;
-                    this.timeText.y-=.5;
-                }
-            }
-        }
-        this.camera.y = this.cameraY;
+        this.camera.x = this.pig.x - 200;
     },
     /*This method add move to plataform, events in collapse*/
     setMoves:function(){
-        this.platforms.forEach(this.wrapPlatform, this);
         this.physics.arcade.collide(this.pig, this.platforms);
-        this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, null, this);
+        this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
         this.physics.arcade.overlap(this.pig, this.corns, this.setPoints, null, this);
     },
-    setPoints:function(pig, corn){
+    setPoints:function(pig, corn) {
         this.eat.play();
         this.score++;
         corn.kill();
     },
     /*Set new velocity to the game acord to the configuration*/
-    setVelocity:function(){
+    setVelocity:function() {
         this.gameCount += 1;
-        if(this.gameCount%10 == 0){
-            this.velocity   += 1;
-        }
-        this.platforms.setAll('body.velocity.x', -this.velocity);
+        this.velocity = (this.gameCount%100 == 0) ? this.velocity + .5 :this.velocity ;
+        this.pig.body.velocity.x = this.velocity
     },
     /*Close the game and redirect to the main menu*/
-    quitGame: function (pointer) {
-        game.paused = true;
+    quitGame: function () {
+        this.music.stop();
         this.state.start('MainMenu');
     }
 };
