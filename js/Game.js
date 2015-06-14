@@ -25,6 +25,8 @@ BasicGame.Game = function (game) {
     /*******Camera*******************/
     this.cameraY            = 400;
     this.cameraX            = 0;
+    /*--------bullets-----*/
+    this.bulletsCount=0;
 
 };
 
@@ -99,6 +101,12 @@ BasicGame.Game.prototype = {
         this.pleft();
         this.prigth();
         this.patformsMove();
+        var space_key = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        space_key.onDown.add(this.addBullet, this); 
+
+        var a = this.input.keyboard.addKey(Phaser.Keyboard.A);
+        a.onDown.add(this.addSuperBullet, this); 
+
         this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
         // this.platforms.forEach(this.wrapPlatform, this); 
     },
@@ -127,13 +135,29 @@ BasicGame.Game.prototype = {
         this.background.setAll('body.allowGravity', false);
         this.background.setAll('body.immovable', true);
         this.background.setAll('height', this.world.height);
-
-        // this.background         = this.add.sprite(0,0,'preloaderBackground');
-        // this.background.height  = this.world.height;
-        // this.background.width   = 2000;
     },
-    addBlock:function(){
-
+    addBlock:function(x,y){
+        this.blocks.create(x+50,y-100, 'block');
+        this.blocks.setAll('body.allowGravity', false);
+        this.blocks.setAll('body.immovable', true);
+        this.blocks.setAll('width', 30);
+        this.blocks.setAll('height', 130);
+    },
+    addSuperBullet:function(x,y){
+        this.superBullets.create(this.pig.x, this.pig.y,'super_bullet');
+        this.superBullets.setAll('body.allowGravity', false);
+        this.superBullets.setAll('body.immovable', true);
+        this.superBullets.setAll('body.velocity.x', this.velocity+500);
+        this.superBullets.setAll('width', 30);
+        this.superBullets.setAll('height', 30);
+    },
+    addBullet:function(x,y){
+        this.bullets.create(this.pig.x, this.pig.y,'bullet');
+        this.bullets.setAll('body.allowGravity', false);
+        this.bullets.setAll('body.immovable', true);
+        this.bullets.setAll('body.velocity.x', this.velocity+500);
+        this.bullets.setAll('width', 30);
+        this.bullets.setAll('height', 30);
     },
     addCorns:function(x,y) {
         this.corns.create(x+20,y-20, 'corn');
@@ -143,6 +167,9 @@ BasicGame.Game.prototype = {
     addPlataforms:function(){
         this.platforms  = this.add.physicsGroup();
         this.corns      = this.add.physicsGroup();
+        this.blocks      = this.add.physicsGroup();
+        this.bullets      = this.add.physicsGroup();
+        this.superBullets      = this.add.physicsGroup();
         for(var x=0 ; x <= (this.plataformsNum*this.plataformWidth); x+=this.plataformWidth){
             this.platforms.create(x, this.plataformYPosition, 'ground');
         }
@@ -187,6 +214,7 @@ BasicGame.Game.prototype = {
             
             this.plataformCount++;
             this.addCorns(x+10,platform.y-30);
+            this.addBlock(x+10,platform.y-30);
         }
     },
     setCamera:function(){
@@ -196,6 +224,22 @@ BasicGame.Game.prototype = {
         this.physics.arcade.collide(this.pig, this.platforms);
         this.physics.arcade.overlap(this.pig, this.platforms, null ,  this.quitGame, this);
         this.physics.arcade.overlap(this.pig, this.corns, this.setPoints, null, this);
+        this.physics.arcade.overlap(this.pig, this.blocks, this.quitGame, null, this);
+        this.physics.arcade.overlap(this.bullets, this.blocks, this.destructBlock, null, this);
+        this.physics.arcade.overlap(this.superBullets, this.blocks, this.destructSuperBlock, null, this);
+    },
+    destructSuperBlock:function(bullet,block){
+        block.kill();
+        bullet.kill();
+    },
+    destructBlock:function(bullet,block){
+        this.bulletsCount++;
+        if(this.bulletsCount == 3){
+            block.kill();
+            this.bulletsCount=0;
+        }
+        bullet.kill();
+
     },
     setPoints:function(pig, corn) {
         this.eat.play();
@@ -208,7 +252,6 @@ BasicGame.Game.prototype = {
         this.pig.body.velocity.x = this.velocity
     },
     quitGame: function () {
-        console.log("www");
         this.music.stop();
         this.state.start('MainMenu');
     }
