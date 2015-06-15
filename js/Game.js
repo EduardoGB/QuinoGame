@@ -281,9 +281,9 @@ BasicGame.Game.prototype = {
         bullet.kill();
     },
     destructPig:function(bullet,pig){
-        if(!this.savePig){
+        // if(!this.savePig){
             this.quitGame();
-        }
+        // }
     },
     destructSuperBlock:function(bullet,block){
         block.kill();
