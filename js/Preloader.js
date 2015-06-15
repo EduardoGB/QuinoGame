@@ -17,6 +17,8 @@ BasicGame.Preloader.prototype = {
         this.load.image('corn', 'img/elote.png');
         this.load.image('bullet', 'img/elote.png');
         this.load.image('super_bullet', 'img/elote.png');
+        this.load.image('bullet_attack', 'img/elote.png');
+        this.load.image('attack', 'img/rect2.png');
         this.load.image('block', 'img/rect.png');
         this.load.spritesheet('pig','img/pig2.png', 40, 40);
         this.load.audio('sound', ['audio/back.wav']);

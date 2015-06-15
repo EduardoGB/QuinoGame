@@ -16,12 +16,14 @@ BasicGame.Game = function (game) {
     /******Score points**************/
     this.score              = 0;
     /******General game**************/
+    this.lastBack       = 0;
     this.height             = 0;
     this.globalGravity      = 150;  
     this.gameCount          = 0;
     this.velocity           = 100;
     /******Player*++++++*************/
     this.playerJumped       = false;
+    this.playerSave       = false;
     /*******Camera*******************/
     this.cameraY            = 400;
     this.cameraX            = 0;
@@ -101,14 +103,34 @@ BasicGame.Game.prototype = {
         this.pleft();
         this.prigth();
         this.patformsMove();
+        this.backgroundMove();
         var space_key = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(this.addBullet, this); 
 
         var a = this.input.keyboard.addKey(Phaser.Keyboard.A);
         a.onDown.add(this.addSuperBullet, this); 
 
+        var save = this.input.keyboard.addKey(Phaser.Keyboard.S);
+        save.onDown.add(this.savePig, this); 
+
         this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
         // this.platforms.forEach(this.wrapPlatform, this); 
+        this.attack.forEach(this.sendAttack, this); 
+        
+    },
+    savePig:function(){
+        this.playerSave = true;
+    },
+    unsavePig:function(){
+        this.playerSave = false;
+    },
+    sendAttack:function(attack){
+        if(this.gameCount%7==0){
+            this.addBulletAttack(attack.x+25,attack.y);
+        }
+        if(attack.x < (this.pig.x - 200-this.plataformWidth)){
+            attack.kill();
+        }
     },
     pjump:function() {
         if (this.cursors.up.isDown && this.pig.body.touching.down ) {
@@ -158,6 +180,20 @@ BasicGame.Game.prototype = {
         this.bullets.setAll('body.velocity.x', this.velocity+500);
         this.bullets.setAll('width', 30);
         this.bullets.setAll('height', 30);
+    },addBulletAttack:function(x,y){
+        this.bulletsAttack.create(x, y,'bullet_attack');
+        this.bulletsAttack.setAll('body.allowGravity', true);
+        this.bulletsAttack.setAll('body.gravity.y', 1);
+        this.bulletsAttack.setAll('width', 30);
+        this.bulletsAttack.setAll('height', 30);
+    },
+    addAttack:function(){
+        this.attack.create(this.pig.x+1200, 100,'attack');
+        this.attack.setAll('body.allowGravity', false);
+        this.attack.setAll('body.immovable', true);
+        this.attack.setAll('body.velocity.x', -200);
+        this.attack.setAll('width', 50);
+        this.attack.setAll('height', 30);
     },
     addCorns:function(x,y) {
         this.corns.create(x+20,y-20, 'corn');
@@ -170,6 +206,8 @@ BasicGame.Game.prototype = {
         this.blocks      = this.add.physicsGroup();
         this.bullets      = this.add.physicsGroup();
         this.superBullets      = this.add.physicsGroup();
+        this.attack      = this.add.physicsGroup();
+        this.bulletsAttack      = this.add.physicsGroup();
         for(var x=0 ; x <= (this.plataformsNum*this.plataformWidth); x+=this.plataformWidth){
             this.platforms.create(x, this.plataformYPosition, 'ground');
         }
@@ -191,6 +229,15 @@ BasicGame.Game.prototype = {
         // this.gameCount          = 0;
         // this.velocity           = 100;
         // this.cameraY            = 900;
+    },
+    backgroundMove:function(background){
+        var background = this.background.children[this.lastBack];
+        if(background.x < (this.pig.x - 2200)){
+            this.lastBack  = (this.lastBack+1 > 3 ) ?  0 : this.lastBack+1;
+            var index           = ((background.z) == 1) ? this.background.children.length : background.z -1 ;  
+            var x               = this.background.children[index-1].x + 1800;
+            background.x          = x;
+        }
     },
     patformsMove: function () {
         var platform = this.platforms.children[this.lastPlatform];
@@ -227,6 +274,16 @@ BasicGame.Game.prototype = {
         this.physics.arcade.overlap(this.pig, this.blocks, this.quitGame, null, this);
         this.physics.arcade.overlap(this.bullets, this.blocks, this.destructBlock, null, this);
         this.physics.arcade.overlap(this.superBullets, this.blocks, this.destructSuperBlock, null, this);
+        this.physics.arcade.overlap(this.bulletsAttack, this.platforms, this.destructAttack, null, this);
+        this.physics.arcade.overlap(this.bulletsAttack, this.pig, this.destructPig, null, this);
+    },
+    destructAttack:function(bullet,platform){
+        bullet.kill();
+    },
+    destructPig:function(bullet,pig){
+        if(!this.savePig){
+            this.quitGame();
+        }
     },
     destructSuperBlock:function(bullet,block){
         block.kill();
@@ -247,6 +304,9 @@ BasicGame.Game.prototype = {
         corn.kill();
     },
     setVelocity:function() {
+        if(this.gameCount%1000==0){
+            this.addAttack();
+        }
         this.gameCount += 1;
         this.velocity = (this.gameCount%10 == 0) ? this.velocity + 2 :this.velocity ;
         this.pig.body.velocity.x = this.velocity
