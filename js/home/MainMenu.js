@@ -6,6 +6,7 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.prototype = {
     create: function () {
+        this.world.setBounds(0,0, BasicGame.gameWidth,BasicGame.gameHeight);
         this.background = this.add.sprite(0,0,'preloaderBackground');
         this.background.height = this.world.height;
         this.background.width = this.world.width;

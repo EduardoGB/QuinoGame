@@ -13,6 +13,8 @@ BasicGame.Preloader.prototype = {
         this.preloadBar = this.add.sprite(450, 200, 'loader');
         
         this.load.image('playButton', 'img/load.png');
+        this.load.image('gameBackground', 'img/back.png');
+
         this.load.image('ground', 'img/camino2.png');
         this.load.image('corn', 'img/elote.png');
         this.load.image('bullet', 'img/elote.png');
@@ -26,6 +28,8 @@ BasicGame.Preloader.prototype = {
 
     },
     create: function () {
+        BasicGame.gameWidth =  this.world.width;
+        BasicGame.gameHeight = this.world.height;
         this.preloadBar.cropEnabled = false;
     },
     update: function () {	

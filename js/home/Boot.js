@@ -3,13 +3,14 @@ BasicGame = {
     music: null,
     orientated: false,
     baseWidth:800,
-    baseHeigth:600
+    baseHeigth:600,
+    gameWidth :0,
+    gameHeight :0
 };
 
 BasicGame.Boot = function (game) { };
 
 BasicGame.Boot.prototype = {
-
     init: function () {
         this.input.maxPointers = 1;
         this.stage.disableVisibilityChange = true;
