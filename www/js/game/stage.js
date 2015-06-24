@@ -29,6 +29,8 @@ BasicGame.Game.prototype.addBackgroundMoves = function(){
 BasicGame.Game.prototype.addCorns = function(x, y){
 	this.corns.create(x+20,y-20, 'corn');
     this.corns.setAll('body.allowGravity', false);
+    this.corns.setAll('scale.x', .3);
+    this.corns.setAll('scale.y', .3);
     this.corns.setAll('body.immovable', true);
 };
 

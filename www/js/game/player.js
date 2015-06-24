@@ -4,7 +4,7 @@ BasicGame.Game.prototype.addPlayer = function(){
     this.physics.enable( [ this.pig ], Phaser.Physics.ARCADE);
     this.pig.animations.add('walk',[0,1],10,true);
     this.pig.play('walk');
-    this.pig.scale.setTo(2,2)
+    this.pig.scale.setTo(.5,.5);
     this.pig.body.gravity.y = this.globalGravity;
 };
 
