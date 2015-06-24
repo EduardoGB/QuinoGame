@@ -19,6 +19,10 @@ Descripción general del juego:
     4.-Flecha-Abajo : Recomendaciones del equipo.
     
   
+Anotaciones:
+Iniciar el juego con escape de la cocina.
+Aplicar niveles de juego y dificultad, diferentes escenarios en cada nivel.
+Dependiendo el nivel de dificultad seran los poderes que podran adquirir.
   
 NOTA: Les agradesco que se unan a formar parte de este proyecto loco que tengo :D y quiero decirles que todo lo que queramos cambiar adelante :D nos tiene que gustar a todos.
 GRACIAS :D
