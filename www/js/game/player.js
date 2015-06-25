@@ -15,6 +15,13 @@ BasicGame.Game.prototype.playerInputJump = function(){
     }		
 };
 
+//Event when the player jump
+BasicGame.Game.prototype.playerInputDown = function(){
+    if (this.cursors.down.isDown){
+        this.pig.body.velocity.y = 500;
+    }
+};
+
 //Event when the player decrease his velocity
 BasicGame.Game.prototype.playerInputLeft = function(){
 	if (this.cursors.left.isDown && this.pig.body.touching.down) {

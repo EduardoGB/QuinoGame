@@ -10,9 +10,15 @@ BasicGame.Game.prototype.addControlButtons = function(){
 };
 
 BasicGame.Game.prototype.renderControls = function(){
-	this.scoreText.setText(this.score+" points");
-        this.timeText.setText(this.pig.body.velocity.x);
-    this.scoreText.x    =   this.timeText.x     = this.pig.x-180;
+	this.cornText.setText("X "+this.cornValue);
+    this.appleText.setText("X "+this.appleValue);
+
+    this.cornCount.x    = this.pig.x-200;
+    this.cornText.x     = this.pig.x-150;
+
+    this.appleCount.x   = this.pig.x-200;
+    this.appleText.x    = this.pig.x-150;
+
     this.slowButton.x   = this.pig.x-150;
     this.jumpButton.x   = this.pig.x+680;
     this.shotButton.x   = this.pig.x+550;

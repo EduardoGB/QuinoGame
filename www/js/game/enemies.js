@@ -2,7 +2,7 @@
 BasicGame.Game.prototype.addBulletAttack = function(x,y){
 	this.bulletsAttack.create(x, y,'bullet_attack');
     this.bulletsAttack.setAll('body.allowGravity', true);
-    this.bulletsAttack.setAll('body.gravity.y', 1);
+    this.bulletsAttack.setAll('body.gravity.y', 1000);
     this.bulletsAttack.setAll('width', 30);
     this.bulletsAttack.setAll('height', 30);
 };

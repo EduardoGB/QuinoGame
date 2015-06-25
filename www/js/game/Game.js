@@ -29,7 +29,9 @@ BasicGame.Game = function (game) {
     this.cameraX            = 0;
     /*--------bullets-----*/
     this.bulletsCount=0;
-
+    this.cornValue =0;
+    this.appleValue =0;
+    this.floorAttack = false;
 };
 
 
@@ -62,6 +64,7 @@ BasicGame.Game.prototype = {
         this.playerInputJump();
         this.playerInputLeft();
         this.playerInputRight();
+        this.playerInputDown();
         this.patformsMove();
         this.addBackgroundMoves();
         var space_key = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -75,6 +78,7 @@ BasicGame.Game.prototype = {
 
         this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
         // this.platforms.forEach(this.wrapPlatform, this); 
+        this.attackPig();
         this.attack.forEach(this.sendAttack, this); 
         
     },

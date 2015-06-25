@@ -1,7 +1,27 @@
 # QuinoGame
 Juego base de perroQuino
 
+
+
 Descripción general del juego:
+
+Carrera.
+El modo carrera solo se podra correr con la finalidad de ganar el mayor numero de puntos en el menor tiempo posible, puntos que puede ser utlizados o canjeado en el modo historio y tambien para compartir via facebook (web site a un futuro).
+
+Historia.
+Parte 1: EL ESCAPE.
+El modo historia contara la vida de un cerdito de granja conocido como "", quien tiene la curiosida de conocer lugares diferentes a la granja en la que habita, para esto planea un escape de su malvado amo el granjero M quien su intencion es  devorarlo al final de la temporada asi que el escape tiene que efectuarse antes de ser devorado.
+
+Parte 2: MAS ALLA DE LA GRANJA
+una vez que escapa de la granja el cerdito inicia su viaje en el mundo con laintension de conocer todo lo que esta fuera de la granja,inicia su viaje recorreriendo el pueblo encontrando diferentes granjas donde tambien ira conociendo nuevos amigos.
+
+Parte 3: AMIGOS
+Cada amigo que conoce el cerdito hara referencia a una graja y una historia donde se envolucre con su nuevo conocido y con ayuda mutua concretar el capitulo (nivel).
+
+Cuando se termina un nivel de amigo se iniciara de nuevo el recorrido por el publo y cada cierto numero de puntos indicaran cuando es momento de conocer a un nuevo amigo y por ende el iniciar un nuevo capitulo.
+
+agregar parte secreta en las que collectando un numero total de puntos y una cantidad de amigos conocidos se pueda canjear automaticamente por historia extrañas como el ser abducido por alienigenas (BUENA IDEA PEPE :D) 
+
 
   SECCIONES
   

@@ -11,9 +11,6 @@ BasicGame.Game.prototype.setMoves = function(){
 };
 
 BasicGame.Game.prototype.setVelocity = function(){
-    if(this.gameCount%1000==0){
-        this.addAttack();
-    }
     this.gameCount += 1;
     this.velocity = (this.gameCount%10 == 0) ? this.velocity + 2 :this.velocity ;
     if(!this.playerJumped && this.pig.body.touching.down){
@@ -57,6 +54,6 @@ BasicGame.Game.prototype.destructBlock = function(block, bullet){
 
 BasicGame.Game.prototype.setPoints = function(pig, corn){
     // this.eat.play();
-    this.score++;
+    this.cornValue++;
     corn.kill();
 };

@@ -35,14 +35,19 @@ BasicGame.Game.prototype.addCorns = function(x, y){
 };
 
 BasicGame.Game.prototype.addTexts = function(){
-	this.scoreText = this.add.text(this.pig.x-200, 10, "", {
-        font: "30px gecko",
-        fill: "#fff",
+    this.cornCount = this.add.sprite(this.pig.x-200, 10, 'corn');
+    this.cornCount.scale.setTo(.6,.6);
+	this.cornText = this.add.text(this.pig.x-120, 60, "", {
+        font: "40px gecko",
+        fill: "#000",
         align: "center"
     });
-    this.timeText = this.add.text(this.pig.x-200, 40, "", {
-        font: "30px gecko",
-        fill: "#fff",
+
+    this.appleCount = this.add.sprite(this.pig.x-200, 130, 'apple');
+    this.appleCount.scale.setTo(.7,.7);
+    this.appleText = this.add.text(this.pig.x-120, 160, "", {
+        font: "40px gecko",
+        fill: "#000",
         align: "center"
     });
 };
@@ -80,12 +85,38 @@ BasicGame.Game.prototype.patformsMove = function(){
         var index           = ((platform.z) == 1) ? this.platforms.children.length : platform.z -1 ;  
         var x               = this.platforms.children[index-1].x + this.plataformWidth;
         platform.x          = x;
-        platform.y          = this.plataformYPosition;
+        if(this.floorAttack){
+            this.floorAttack = false;
+            platform.visible = false;
+        } else {
+            platform.visible = true;
+        }
+        // platform.y          = this.plataformYPosition;
         // if(this.gameCount%1200==0){
             // platform.visible = false;
         // }
         this.plataformCount++;
-        this.addCorns(x+10,platform.y-30);
-        this.addBlock(x+10,platform.y-30);
+        if(platform.z-1 == 0 || !platform.visible){
+            this.addCorns(x-120,platform.y-30);
+            this.addCorns(x-80,platform.y-70);
+            this.addCorns(x-40,platform.y-95);
+            this.addCorns(x+0,platform.y-120);
+            this.addCorns(x+40,platform.y-120);
+            this.addCorns(x+80,platform.y-95);
+            this.addCorns(x+120,platform.y-70);
+            this.addCorns(x+160,platform.y-30);
+
+        } else if(platform.z-1 == 4){
+            this.addCorns(x-120,platform.y-30);
+            this.addCorns(x-80,platform.y-30);
+            this.addCorns(x-40,platform.y-30);
+            this.addCorns(x+0,platform.y-30);
+            this.addCorns(x+40,platform.y-30);
+            this.addCorns(x+80,platform.y-30);
+            this.addCorns(x+120,platform.y-30);
+            this.addCorns(x+160,platform.y-30);            
+        }
+        // this.addBlock(x+10,platform.y-30);
+
     }
 };

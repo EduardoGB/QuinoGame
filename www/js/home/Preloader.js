@@ -12,11 +12,13 @@ BasicGame.Preloader.prototype = {
         
         this.preloadBar = this.add.sprite(450, 200, 'loader');
         
-        this.load.image('playButton', 'img/load.png');
+        this.load.image('playButton', 'img/image.png');
         this.load.image('gameBackground', 'img/back.png');
 
         this.load.image('ground', 'img/camino2.png');
         this.load.image('corn', 'img/maiz.png');
+        this.load.image('apple', 'img/manzana.png');
+
         this.load.image('bullet', 'img/elote.png');
         this.load.image('super_bullet', 'img/elote.png');
         this.load.image('bullet_attack', 'img/elote.png');

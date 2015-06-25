@@ -16,7 +16,7 @@ BasicGame.Boot.prototype = {
         this.stage.disableVisibilityChange = true;
         if (this.game.device.desktop) {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            this.scale.setMinMax(480, 260, window.screen.width,window.screen.height);
+            this.scale.setMinMax(480, 260, jQuery('body').width(),jQuery('body').height());
             this.scale.pageAlignHorizontally = false;
             this.scale.pageAlignVertically = false;
         } else {

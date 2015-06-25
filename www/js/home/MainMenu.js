@@ -13,7 +13,17 @@ BasicGame.MainMenu.prototype = {
         this.music = this.add.audio('sound',1,true);
         // this.music.play();
 
-        this.playButton = this.add.button(450, 200, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
+        this.playAButton = this.add.button(450, 200, 'playButton', this.startHistory, this, 'buttonOver', 'buttonOut', 'buttonOver');
+        this.playAText = this.add.text(15, 0, "Historia", {font: "50px Arial", fill: "#ffffff"});
+        this.playAButton.addChild(this.playAText);
+
+        this.playBButton = this.add.button(450, 300, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
+        this.playBText = this.add.text(15, 0, "Carrera", {font: "50px Arial", fill: "#ffffff"});
+        this.playBButton.addChild(this.playBText);
+
+        this.playCButton = this.add.button(450, 400, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
+        this.playCText = this.add.text(0, 0, "Compartir", {font: "50px Arial", fill: "#ffffff"});
+        this.playCButton.addChild(this.playCText);
     },
     update: function () {
         //Do some nice funky main menu effect here
@@ -21,5 +31,9 @@ BasicGame.MainMenu.prototype = {
     startGame: function (pointer) {
         this.music.stop();
         this.state.start('Game');
+    },
+    startHistory: function (pointer) {
+        this.music.stop();
+        this.state.start('History');
     }
 };
