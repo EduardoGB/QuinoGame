@@ -5,7 +5,16 @@ BasicGame = {
     baseWidth:800,
     baseHeigth:600,
     gameWidth :0,
-    gameHeight :0
+    gameHeight :0,
+    background_image:'img/background.png',
+    loader_image:'img/load.png',
+
+    game_background_image:'img/background.png',
+    game_platform_image:'img/box-sand.png',
+    game_wheat_image:'img/wheat.png',
+    game_cloud1_image:'img/cloud_1.png',
+    game_cloud2_image:'img/cloud_2.png',
+    game_cloud3_image:'img/cloud_3.png'
 };
 
 BasicGame.Boot = function (game) { };
@@ -32,8 +41,8 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
-        this.load.image('preloaderBackground', 'img/back.png');
-        this.load.image('loader', 'img/load.png');
+        this.load.image('preloaderBackground', BasicGame.background_image);
+        this.load.image('loader',BasicGame.loader_image);
     },
 
     create: function () {

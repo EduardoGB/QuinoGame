@@ -10,19 +10,19 @@ BasicGame.Game.prototype.addControlButtons = function(){
 };
 
 BasicGame.Game.prototype.renderControls = function(){
-	this.cornText.setText("X "+this.cornValue);
-    this.appleText.setText("X "+this.appleValue);
+	// this.cornText.setText("X "+this.cornValue);
+ //    this.appleText.setText("X "+this.appleValue);
 
-    this.cornCount.x    = this.pig.x-200;
-    this.cornText.x     = this.pig.x-150;
+ //    this.cornCount.x    = this.pig.x-200;
+ //    this.cornText.x     = this.pig.x-150;
 
-    this.appleCount.x   = this.pig.x-200;
-    this.appleText.x    = this.pig.x-150;
+ //    this.appleCount.x   = this.pig.x-200;
+ //    this.appleText.x    = this.pig.x-150;
 
-    this.slowButton.x   = this.pig.x-150;
-    this.jumpButton.x   = this.pig.x+680;
-    this.shotButton.x   = this.pig.x+550;
-    this.ext1Button.x   = this.pig.x+680;
+    // this.slowButton.x   = this.pig.x-150;
+    // this.jumpButton.x   = this.pig.x+680;
+    // this.shotButton.x   = this.pig.x+550;
+    // this.ext1Button.x   = this.pig.x+680;
 };
 
 BasicGame.Game.prototype.resetVars = function(){
@@ -33,7 +33,7 @@ BasicGame.Game.prototype.resetVars = function(){
     this.plataformXPosition = 600;
     this.plataformChange    = 20;
     this.plataformHeight    = 50;
-    this.plataformWidth     = 200;
+    this.plataformWidth     = 153;
 
     this.lastPlatform       = 0;
     this.plataformCount     = 1;

@@ -7,7 +7,7 @@ BasicGame.Game = function (game) {
     this.plataformXPosition = 600;
     this.plataformChange    = 20;
     this.plataformHeight    = 50;
-    this.plataformWidth     = 200;
+    this.plataformWidth     = 153;
 
     this.lastPlatform       = 0;
     this.plataformCount     = 1;
@@ -65,8 +65,6 @@ BasicGame.Game.prototype = {
         this.playerInputLeft();
         this.playerInputRight();
         this.playerInputDown();
-        this.patformsMove();
-        this.addBackgroundMoves();
         var space_key = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(this.addBullet, this); 
 
@@ -77,10 +75,10 @@ BasicGame.Game.prototype = {
         save.onDown.add(this.safePig, this); 
 
         this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
-        // this.platforms.forEach(this.wrapPlatform, this); 
+        this.wrapPlatform();
         this.attackPig();
         this.attack.forEach(this.sendAttack, this); 
-        
+        // this.background.tilePosition.x = 0.5;        
     },
     
     quitGame: function () {

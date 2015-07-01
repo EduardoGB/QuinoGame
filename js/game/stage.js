@@ -6,25 +6,11 @@ BasicGame.Game.prototype.addSounds = function(){
 
 //Add background images to the game
 BasicGame.Game.prototype.addGameBackground = function(){
-	this.background  = this.add.physicsGroup();
-    for(var x=0 ; x <= (3*2000); x+=1900){
-        this.background.create(x, 0, 'gameBackground');
-    }
-    this.background.setAll('body.allowGravity', false);
-    this.background.setAll('body.immovable', true);
-    this.background.setAll('height', this.world.height);		
+    this.background  = this.add.tileSprite(0,0,500,1200,'gameBackground');
+	
 };
 
 //Add moves to the background images 
-BasicGame.Game.prototype.addBackgroundMoves = function(){
-	var background = this.background.children[this.lastBack];
-    if(background.x < (this.pig.x - 2200)){
-        this.lastBack  	= (this.lastBack+1 > 3 ) ?  0 : this.lastBack+1;
-        var index 		= ((background.z) == 1) ? this.background.children.length : background.z -1 ;  
-        var x           = this.background.children[index-1].x + 1800;
-        background.x    = x;
-    }
-};
 
 BasicGame.Game.prototype.addCorns = function(x, y){
 	this.corns.create(x+20,y-20, 'corn');
@@ -44,7 +30,7 @@ BasicGame.Game.prototype.addTexts = function(){
     });
 
     this.appleCount = this.add.sprite(this.pig.x-200, 130, 'apple');
-    this.appleCount.scale.setTo(.7,.7);
+    this.appleCount.scale.setTo(.7,.7); 
     this.appleText = this.add.text(this.pig.x-120, 160, "", {
         font: "40px gecko",
         fill: "#000",
@@ -53,70 +39,87 @@ BasicGame.Game.prototype.addTexts = function(){
 };
 
 BasicGame.Game.prototype.addPlataforms = function(){
+    this.cloud  = this.add.physicsGroup();
+    this.wheat  = this.add.physicsGroup();
     this.platforms  = this.add.physicsGroup();
+    
     this.corns      = this.add.physicsGroup();
     this.blocks      = this.add.physicsGroup();
     this.bullets      = this.add.physicsGroup();
     this.superBullets      = this.add.physicsGroup();
     this.attack      = this.add.physicsGroup();
     this.bulletsAttack      = this.add.physicsGroup();
-    for(var x=0 ; x <= (this.plataformsNum*this.plataformWidth); x+=this.plataformWidth){
-        this.platforms.create(x, this.plataformYPosition, 'ground');
+
+    for(var x=0 ; x <= (10*this.plataformWidth); x+=this.plataformWidth){
+        this.platforms.create(x, this.plataformYPosition, 'platform_image');
     }
+    for(var x=0 ; x <= (10*260); x+=260){
+        this.wheat.create(x, this.plataformYPosition-130, 'wheat_image');
+    }
+
+    for(var x=0 ; x <= (10*300); x+=260){
+        this.cloud.create(x, this.setCloudY(), this.setCloud());
+    }
+
+    this.cloud.setAll('body.allowGravity', false);
+    this.cloud.setAll('body.immovable', true);
+
+    this.wheat.setAll('body.allowGravity', false);
+    this.wheat.setAll('body.immovable', true);
+
     this.platforms.setAll('body.allowGravity', false);
     this.platforms.setAll('body.immovable', true);
 };
 
-BasicGame.Game.prototype.patformsMove = function(){
-	var platform = this.platforms.children[this.lastPlatform];
-    if(platform.x < (this.pig.x - 200-this.plataformWidth)){
-        if(this.plataformCount >= this.plataformChange){
-            var rand = Math.round(Math.random() * 100);
-            if(rand%2==0 && platform.y > 400){
-                this.diff = -1;
-            } else if(platform.y < 400){
-                this.diff = 1;
-            }
-            this.plataformYPosition += (this.diff * this.plataformHeight);
-            this.plataformCount=1;
-        }
+BasicGame.Game.prototype.wrapPlatform = function(){    
+    var platform = this.platforms.getFirstExists();
+    if(platform.x < this.pig.x-400){
+        this.platforms.removeChild(platform);
+        var lastPlatform = this.platforms.getTop();
+        this.platforms.create(lastPlatform.x+lastPlatform.width, this.plataformYPosition, 'platform_image');
+        this.platforms.setAll('body.allowGravity', false);
+        this.platforms.setAll('body.immovable', true);
+    }
 
-        this.lastPlatform   = (this.lastPlatform+1 > 6 ) ?  0 : this.lastPlatform+1;
-        var index           = ((platform.z) == 1) ? this.platforms.children.length : platform.z -1 ;  
-        var x               = this.platforms.children[index-1].x + this.plataformWidth;
-        platform.x          = x;
-        if(this.floorAttack){
-            this.floorAttack = false;
-            platform.visible = false;
-        } else {
-            platform.visible = true;
-        }
-        // platform.y          = this.plataformYPosition;
-        // if(this.gameCount%1200==0){
-            // platform.visible = false;
-        // }
-        this.plataformCount++;
-        if(platform.z-1 == 0 || !platform.visible){
-            this.addCorns(x-120,platform.y-30);
-            this.addCorns(x-80,platform.y-70);
-            this.addCorns(x-40,platform.y-95);
-            this.addCorns(x+0,platform.y-120);
-            this.addCorns(x+40,platform.y-120);
-            this.addCorns(x+80,platform.y-95);
-            this.addCorns(x+120,platform.y-70);
-            this.addCorns(x+160,platform.y-30);
+    var wheat = this.wheat.getFirstExists();
+    if(wheat.x < this.pig.x-500){
+        this.wheat.removeChild(wheat);
+        var lastWheat = this.wheat.getTop();
+        this.wheat.create(lastWheat.x+lastWheat.width, this.plataformYPosition-130, 'wheat_image');
+        this.wheat.setAll('body.allowGravity', false);
+        this.wheat.setAll('body.immovable', true);
+    }
 
-        } else if(platform.z-1 == 4){
-            this.addCorns(x-120,platform.y-30);
-            this.addCorns(x-80,platform.y-30);
-            this.addCorns(x-40,platform.y-30);
-            this.addCorns(x+0,platform.y-30);
-            this.addCorns(x+40,platform.y-30);
-            this.addCorns(x+80,platform.y-30);
-            this.addCorns(x+120,platform.y-30);
-            this.addCorns(x+160,platform.y-30);            
-        }
-        // this.addBlock(x+10,platform.y-30);
-
+    var cloud = this.cloud.getFirstExists();
+    if(cloud.x < this.pig.x-500){
+        this.cloud.removeChild(cloud);
+        var lastCloud = this.cloud.getTop();
+        this.cloud.create(lastCloud.x+lastCloud.width, this.setCloudY(), this.setCloud());
+        this.cloud.setAll('body.allowGravity', false);
+        this.cloud.setAll('body.immovable', true);
     }
 };
+
+BasicGame.Game.prototype.setCloud = function(){
+    var select = Math.round(Math.random() * 100);
+    if(select > 0 && select <= 33){
+        return 'cloud1_image';
+    } else if(select > 33 && select <= 66) {
+        return 'cloud2_image';
+    } else if(select > 66 && select <= 100) {
+        return 'cloud3_image';
+    } else {
+        return "cloud2_image";
+    }
+}
+
+BasicGame.Game.prototype.setCloudY = function(){
+    var select = Math.round(Math.random() * 100);
+    if(select > 0 && select <= 50){
+        return  200 - select;
+    } else if(select > 50 && select <= 100) {
+        return 200 + select;
+    } else {
+        return 200;
+    }
+}

@@ -30,5 +30,6 @@ BasicGame.Game.prototype.sendAttack = function(attack){
     }
     if(attack.x < (this.pig.x - 200-this.plataformWidth)){
         attack.kill();
+        this.attack.removeChild(attack);
     }
 };

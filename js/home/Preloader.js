@@ -12,10 +12,16 @@ BasicGame.Preloader.prototype = {
         
         this.preloadBar = this.add.sprite(450, 200, 'loader');
         
-        this.load.image('playButton', 'img/image.png');
-        this.load.image('gameBackground', 'img/back.png');
+        this.load.image('platform_image', BasicGame.game_platform_image);
+        this.load.image('wheat_image', BasicGame.game_wheat_image);
+        this.load.image('cloud1_image', BasicGame.game_cloud1_image);
+        this.load.image('cloud2_image', BasicGame.game_cloud2_image);
+        this.load.image('cloud3_image', BasicGame.game_cloud3_image);
 
-        this.load.image('ground', 'img/camino2.png');
+        this.load.image('gameBackground', BasicGame.game_background_image);
+
+        this.load.image('playButton', 'img/image.png');
+
         this.load.image('corn', 'img/maiz.png');
         this.load.image('apple', 'img/manzana.png');
 
