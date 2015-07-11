@@ -28,6 +28,7 @@ BasicGame.Game.prototype.unsafePig = function(){
 
 BasicGame.Game.prototype.setCamera = function(){
 	this.camera.x = this.pig.x - 200;
+    this.background.x = this.pig.x - 200;
 };
 
 BasicGame.Game.prototype.destructAttack = function(bullet, platform){

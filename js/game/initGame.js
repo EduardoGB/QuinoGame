@@ -1,28 +1,16 @@
 BasicGame.Game.prototype.addControlButtons = function(){
 	this.cursors    = this.input.keyboard.createCursorKeys();
-    this.jumpButton = this.add.button(0, this.world.height - 150 , 'playButton', this.playerJump, this);
-    this.slowButton = this.add.button(0, this.world.height - 150 , 'playButton', this.playerDecrease, this);
-    this.shotButton = this.add.button(0, this.world.height - 150 , 'playButton', this.playerDecrease, this);
-    this.ext1Button = this.add.button(0, this.world.height - 280 , 'playButton', this.playerDecrease, this);
-
-    this.jumpButton.height  = this.slowButton.height = this.shotButton.height    =  this.ext1Button.height = 100;
-    this.jumpButton.width   = this.slowButton.width =this.shotButton.width = this.ext1Button.width = 100;
 };
 
 BasicGame.Game.prototype.renderControls = function(){
-	// this.cornText.setText("X "+this.cornValue);
- //    this.appleText.setText("X "+this.appleValue);
+	this.cornText.setText("X "+this.cornValue);
+    this.appleText.setText("X "+this.appleValue);
 
- //    this.cornCount.x    = this.pig.x-200;
- //    this.cornText.x     = this.pig.x-150;
+    this.cornCount.x    = this.pig.x-200;
+    this.cornText.x     = this.pig.x-150;
 
- //    this.appleCount.x   = this.pig.x-200;
- //    this.appleText.x    = this.pig.x-150;
-
-    // this.slowButton.x   = this.pig.x-150;
-    // this.jumpButton.x   = this.pig.x+680;
-    // this.shotButton.x   = this.pig.x+550;
-    // this.ext1Button.x   = this.pig.x+680;
+    this.appleCount.x   = this.pig.x-200;
+    this.appleText.x    = this.pig.x-150;
 };
 
 BasicGame.Game.prototype.resetVars = function(){

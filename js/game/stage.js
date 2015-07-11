@@ -2,11 +2,14 @@
 BasicGame.Game.prototype.addSounds = function(){
     this.music = this.add.audio('sound',1,true);
     this.eat = this.add.audio('eat',1);
+    this.music.play();
 };
 
 //Add background images to the game
 BasicGame.Game.prototype.addGameBackground = function(){
-    this.background  = this.add.tileSprite(0,0,500,1200,'gameBackground');
+    this.background  = this.add.sprite(0,0,'gameBackground');
+    this.background.width = BasicGame.gameWidth;
+    this.background.height = BasicGame.gameHeight;
 	
 };
 
@@ -57,7 +60,7 @@ BasicGame.Game.prototype.addPlataforms = function(){
         this.wheat.create(x, this.plataformYPosition-130, 'wheat_image');
     }
 
-    for(var x=0 ; x <= (10*300); x+=260){
+    for(var x=0 ; x <= (4*500); x+=500){
         this.cloud.create(x, this.setCloudY(), this.setCloud());
     }
 
@@ -94,7 +97,7 @@ BasicGame.Game.prototype.wrapPlatform = function(){
     if(cloud.x < this.pig.x-500){
         this.cloud.removeChild(cloud);
         var lastCloud = this.cloud.getTop();
-        this.cloud.create(lastCloud.x+lastCloud.width, this.setCloudY(), this.setCloud());
+        this.cloud.create(lastCloud.x+lastCloud.width+400, this.setCloudY(), this.setCloud());
         this.cloud.setAll('body.allowGravity', false);
         this.cloud.setAll('body.immovable', true);
     }

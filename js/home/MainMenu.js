@@ -12,7 +12,7 @@ BasicGame.MainMenu.prototype = {
         this.background.width = this.world.width;
         this.music = this.add.audio('sound',1,true);
         // this.music.play();
-
+        
         this.playAButton = this.add.button(450, 200, 'playButton', this.startHistory, this, 'buttonOver', 'buttonOut', 'buttonOver');
         this.playAText = this.add.text(15, 0, "Historia", {font: "50px Arial", fill: "#ffffff"});
         this.playAButton.addChild(this.playAText);
@@ -35,5 +35,8 @@ BasicGame.MainMenu.prototype = {
     startHistory: function (pointer) {
         this.music.stop();
         this.state.start('History');
-    }
+    },
+    gameResized: function (width, height) {
+        this.scale.setMinMax(200, 200,jQuery(window).width(),jQuery(window).height());
+    },
 };

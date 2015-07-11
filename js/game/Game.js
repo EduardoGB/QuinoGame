@@ -78,7 +78,6 @@ BasicGame.Game.prototype = {
         this.wrapPlatform();
         this.attackPig();
         this.attack.forEach(this.sendAttack, this); 
-        // this.background.tilePosition.x = 0.5;        
     },
     
     quitGame: function () {
