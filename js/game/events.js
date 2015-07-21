@@ -9,6 +9,11 @@ BasicGame.Game.prototype.setMoves = function(){
     this.physics.arcade.overlap(this.superBullets, this.blocks, this.destructSuperBlock, null, this);
     this.physics.arcade.overlap(this.bulletsAttack, this.ground, this.destructAttack, null, this);
     this.physics.arcade.overlap(this.bulletsAttack, this.pig, this.destructPig, null, this);
+
+    //console.log(this.pig.body.touching.right);
+    if(this.pig.body.touching.right){
+        this.quitGame();
+    }
 };
 
 BasicGame.Game.prototype.checkCollidate = function(pig,ground){
