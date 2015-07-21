@@ -39,13 +39,15 @@ BasicGame.Game.prototype = {
     /*Init the game*/
     create: function () {
         this.physics.startSystem(Phaser.Physics.P2JS);
-        this.world.setBounds(0,0,2000000000,this.world.height);
+        this.world.setBounds(0,0,2000000000,5000);
         this.physics.arcade.gravity.y = this.globalGravity;
 
         this.addGameBackground();
         this.resetVars();
+        this.backImages();
+        
         this.addPlataforms();
-        this.addPlayer();
+        
         this.addTexts();
         this.addSounds();
         this.addControlButtons();
@@ -74,8 +76,8 @@ BasicGame.Game.prototype = {
         var save = this.input.keyboard.addKey(Phaser.Keyboard.S);
         save.onDown.add(this.safePig, this); 
 
-        this.physics.arcade.overlap(this.pig, this.platforms, this.quitGame, this.quitGame , this);
         this.wrapPlatform();
+        this.updateGroundAndGrass();
         this.attackPig();
         this.attack.forEach(this.sendAttack, this); 
     },

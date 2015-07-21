@@ -1,21 +1,23 @@
 
 BasicGame.Game.prototype.setMoves = function(){
-    this.physics.arcade.collide(this.pig, this.platforms);
-    this.physics.arcade.overlap(this.pig, this.platforms, null ,  this.quitGame, this);
+    this.physics.arcade.collide(this.pig, this.ground, this.checkCollidate);
+    this.physics.arcade.overlap(this.pig, this.ground, this.quitGame ,null, this);
+
     this.physics.arcade.overlap(this.pig, this.corns, this.setPoints, null, this);
     this.physics.arcade.overlap(this.pig, this.blocks, this.quitGame, null, this);
     this.physics.arcade.overlap(this.bullets, this.blocks, this.destructBlock, null, this);
     this.physics.arcade.overlap(this.superBullets, this.blocks, this.destructSuperBlock, null, this);
-    this.physics.arcade.overlap(this.bulletsAttack, this.platforms, this.destructAttack, null, this);
+    this.physics.arcade.overlap(this.bulletsAttack, this.ground, this.destructAttack, null, this);
     this.physics.arcade.overlap(this.bulletsAttack, this.pig, this.destructPig, null, this);
+};
+
+BasicGame.Game.prototype.checkCollidate = function(pig,ground){
+
 };
 
 BasicGame.Game.prototype.setVelocity = function(){
     this.gameCount += 1;
-    this.velocity = (this.gameCount%10 == 0) ? this.velocity + 2 :this.velocity ;
-    if(!this.playerJumped && this.pig.body.touching.down){
-        this.pig.body.velocity.x = this.velocity
-    } 
+    this.pig.body.velocity.x = this.velocity;
 };
 
 BasicGame.Game.prototype.safePig = function(){
@@ -28,7 +30,13 @@ BasicGame.Game.prototype.unsafePig = function(){
 
 BasicGame.Game.prototype.setCamera = function(){
 	this.camera.x = this.pig.x - 200;
+    if(!this.playerJumped){
+        this.camera.y =  this.pig.y - 520;    
+        this.background.y = this.pig.y - 500;
+    }
+    
     this.background.x = this.pig.x - 200;
+    
 };
 
 BasicGame.Game.prototype.destructAttack = function(bullet, platform){

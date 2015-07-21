@@ -7,11 +7,19 @@ BasicGame = {
     gameWidth :0,
     gameHeight :0,
     background_image:'img/background.png',
+    ground:'img/pasto-bloque2.png',
+    grass:'img/pasto-bloque1.png',
+    grass2:'img/pasto2.png',
+    grass3:'img/cesped.png',
+    mud:'img/lodo.png',
+    smilesun:'img/sun.png',
+    wheat:'img/wheat.png',
+    bush:'img/arbusto.png',
     loader_image:'img/load.png',
 
     game_background_image:'img/background.png',
     game_platform_image:'img/box-sand.png',
-    game_wheat_image:'img/wheat.png',
+    
     game_cloud1_image:'img/cloud_1.png',
     game_cloud2_image:'img/cloud_2.png',
     game_cloud3_image:'img/cloud_3.png'

@@ -34,3 +34,19 @@ BasicGame.Game.prototype.selectAttack = function(){
 
 };
 
+BasicGame.Game.prototype.selectPlatform = function(){
+	this.select = Math.round(Math.random() * 100);
+	if(this.select > 0 && this.select <= 25){
+		return -120;
+	} else if(this.select > 25 && this.select <= 50) {
+		return 120;
+	} else if(this.select > 50 && this.select <= 75) {
+		return -120;
+	} else if(this.select > 75 && this.select <= 100) {
+		return 120;
+	} else {
+		return -120;
+	}
+
+};
+

@@ -1,10 +1,10 @@
 //Render the player images
 BasicGame.Game.prototype.addPlayer = function(){
-    this.pig = this.add.sprite(500, 400, 'pig');
+    this.pig = this.add.sprite(500, 2300, 'pig');
     this.physics.enable( [ this.pig ], Phaser.Physics.ARCADE);
     this.pig.animations.add('walk',[0,1],10,true);
     this.pig.play('walk');
-    this.pig.scale.setTo(.5,.5);
+    this.pig.scale.setTo(.7,.7);
     this.pig.body.gravity.y = this.globalGravity;
 };
 
@@ -45,8 +45,8 @@ BasicGame.Game.prototype.playerDecrease = function(){
 //Execute a player jump
 BasicGame.Game.prototype.playerJump = function(){
 	this.playerJumped = true;
-    this.pig.body.velocity.y = (this.pig.body.touching.down) ? -280 : this.pig.body.velocity.y;     	
-    this.pig.body.velocity.x +=15;
+    this.pig.body.velocity.y = (this.pig.body.touching.down) ? -400 : this.pig.body.velocity.y;     	
+    //this.pig.body.velocity.x +=15;
 };
 
 //Add bullets with a super power
