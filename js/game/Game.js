@@ -67,6 +67,7 @@ BasicGame.Game.prototype = {
         this.playerInputLeft();
         this.playerInputRight();
         this.playerInputDown();
+        
         var space_key = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(this.addBullet, this); 
 

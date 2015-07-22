@@ -14,7 +14,6 @@ BasicGame.Game.prototype.addGameBackground = function(){
 };
 
 //Add moves to the background images 
-
 BasicGame.Game.prototype.addCorns = function(x, y){
 	this.corns.create(x+20,y-20, 'corn');
     this.corns.setAll('body.allowGravity', false);
@@ -41,6 +40,7 @@ BasicGame.Game.prototype.addTexts = function(){
         align: "center"
     });
 };
+
 BasicGame.Game.prototype.backImages = function(){
     this.setGroups();
      for(var x=0 ; x <= (10*this.plataformWidth); x+=this.plataformWidth){
@@ -48,10 +48,9 @@ BasicGame.Game.prototype.backImages = function(){
     }
 
     for(var x=0 ; x <= (10*this.plataformWidth); x+=this.plataformWidth){
-        this.addBackGrass(x);
+        this.addBackGrass(x-70);
     }
     this.addPlayer();
-
 };
 
 BasicGame.Game.prototype.setGroups = function(){
@@ -68,14 +67,29 @@ BasicGame.Game.prototype.addBackGrass = function(x){
     this.grass2.create(x, this.plataformYPosition-100, 'grass2');
     this.wheat.create(x, this.plataformYPosition-250, 'wheat');
 
-    this.wheat.setAll('body.allowGravity', false);
-    this.wheat.setAll('body.immovable', true);
-    this.grass2.setAll('body.allowGravity', false);
-    this.grass2.setAll('body.immovable', true);
-    this.grass3.setAll('body.allowGravity', false);
-    this.grass3.setAll('body.immovable', true);
-    this.bush.setAll('body.allowGravity', false);
-    this.bush.setAll('body.immovable', true);
+    this.wheat.getTop().body.allowGravity = false;
+    this.wheat.getTop().body.immovable =true;
+    this.wheat.getTop().scale.x = .5;
+    this.wheat.getTop().visible = this.backgroundVisible();
+
+    this.grass2.getTop().body.allowGravity = false;
+    this.grass2.getTop().body.immovable = true;
+    this.grass2.getTop().scale.x = .36;
+    //this.grass2.getTop().visible = this.backgroundVisible();
+
+    this.grass3.getTop().body.allowGravity = false;
+    this.grass3.getTop().body.immovable = true;
+    this.grass3.getTop().scale.x= .43;
+    //this.grass3.getTop().visible = this.backgroundVisible();
+
+    this.bush.getTop().body.allowGravity = false;
+    this.bush.getTop().body.immovable = true;
+    this.bush.getTop().scale.x = .5;
+    this.bush.getTop().visible = this.backgroundVisible();
+
+    if(this.plataformCount%20 == 0) {
+        this.bush.getTop().visible = false;
+    }
 };
 
 BasicGame.Game.prototype.removeBackGrass = function(){   
@@ -90,7 +104,7 @@ BasicGame.Game.prototype.removeBackGrass = function(){
     this.wheat.removeChild(firstWheat);
 }
 
-BasicGame.Game.prototype.addBaseGrass = function(x){   
+BasicGame.Game.prototype.addBaseGrass = function(x) {   
     this.ground.create(x, this.plataformYPosition, 'ground');
     
     // if (this.plataformCount%15 == 0) {
@@ -99,45 +113,41 @@ BasicGame.Game.prototype.addBaseGrass = function(x){
         this.grass.create(x, this.plataformYPosition-30, 'grass');
     // }
 
-    this.grass.setAll('body.allowGravity', false);
-    this.grass.setAll('body.immovable', true);
-    this.grass.setAll('scale.y', .6);
+    this.grass.getTop().body.allowGravity = false;
+    this.grass.getTop().body.immovable  = true;
+    this.grass.getTop().scale.y = .6;
+    this.grass.getTop().scale.x = .5;
 
-    this.ground.setAll('body.allowGravity', false);
-    this.ground.setAll('body.immovable', true);
-    this.ground.setAll('scale.y', 1.2);
+    this.ground.getTop().body.allowGravity = false;
+    this.ground.getTop().body.immovable = true;
+    this.ground.getTop().scale.y = 1.2;
+    this.ground.getTop().scale.x =.5;
 };
 
-BasicGame.Game.prototype.addBaseGroups = function(x){   
+BasicGame.Game.prototype.addBaseGroups = function(x) {   
     this.ground     = this.add.physicsGroup();
     this.grass      = this.add.physicsGroup();
     this.mud        = this.add.physicsGroup();
 }
 
-
-BasicGame.Game.prototype.addPlataforms = function(){
+BasicGame.Game.prototype.addPlataforms = function() {
+    this.bulletsAttack  = this.add.physicsGroup();
+    this.superBullets   = this.add.physicsGroup();
+    this.bullets        = this.add.physicsGroup();
+    this.blocks         = this.add.physicsGroup();
+    this.corns          = this.add.physicsGroup();
+    this.attack         = this.add.physicsGroup();
     
-    this.corns      = this.add.physicsGroup();
-    this.blocks      = this.add.physicsGroup();
-    this.bullets      = this.add.physicsGroup();
-    this.superBullets      = this.add.physicsGroup();
-    this.attack      = this.add.physicsGroup();
-    this.bulletsAttack      = this.add.physicsGroup();
-
     this.addBaseGroups();
     for(var x=0 ; x <= (10*this.plataformWidth); x+=this.plataformWidth){
         this.addBaseGrass(x);
     }
-
-    
-    
 };
 
 BasicGame.Game.prototype.addCloud = function(x,w){
     this.cloud.create(x+100, this.setCloudY(), this.setCloud());
-    this.cloud.setAll('body.allowGravity', false);
-    this.cloud.setAll('body.immovable', true);
-    
+    this.cloud.getTop().body.allowGravity = false;
+    this.cloud.getTop().body.immovable = true;
 };
 
 BasicGame.Game.prototype.updateGroundAndGrass = function(){    
@@ -153,7 +163,7 @@ BasicGame.Game.prototype.updateGroundAndGrass = function(){
             this.plataformYPosition += this.selectPlatform();    
         }
         var nextX = this.ground.getTop().x + this.plataformWidth;           
-        this.addBackGrass(nextX);
+        this.addBackGrass(nextX-70);
         this.addBaseGrass(nextX);
     }
 };
@@ -191,3 +201,20 @@ BasicGame.Game.prototype.setCloudY = function(){
         return 200;
     }
 }
+
+
+BasicGame.Game.prototype.backgroundVisible = function(){
+    this.select = Math.round(Math.random() * 100);
+    if(this.select > 0 && this.select <= 25){
+        return true;
+    } else if(this.select > 25 && this.select <= 50) {
+        return false;
+    } else if(this.select > 50 && this.select <= 75) {
+        return true;
+    } else if(this.select > 75 && this.select <= 100) {
+        return false;
+    } else {
+        return true;
+    }
+
+};

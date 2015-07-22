@@ -27,7 +27,7 @@ BasicGame.Game.prototype.resetVars = function(){
     this.plataformXPosition = 600;
     this.plataformChange    = 20;
     this.plataformHeight    = 50;
-    this.plataformWidth     = 301;
+    this.plataformWidth     = 150;
 
     this.lastPlatform       = 0;
     this.plataformCount     = 1;

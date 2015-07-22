@@ -1,6 +1,6 @@
 
 BasicGame.Game.prototype.setMoves = function(){
-    this.physics.arcade.collide(this.pig, this.ground, this.checkCollidate);
+    this.physics.arcade.collide(this.pig, this.ground);
     this.physics.arcade.overlap(this.pig, this.ground, this.quitGame ,null, this);
 
     this.physics.arcade.overlap(this.pig, this.corns, this.setPoints, null, this);
@@ -12,12 +12,8 @@ BasicGame.Game.prototype.setMoves = function(){
 
     //console.log(this.pig.body.touching.right);
     if(this.pig.body.touching.right){
-        this.quitGame();
+        // this.quitGame();
     }
-};
-
-BasicGame.Game.prototype.checkCollidate = function(pig,ground){
-
 };
 
 BasicGame.Game.prototype.setVelocity = function(){
@@ -41,7 +37,6 @@ BasicGame.Game.prototype.setCamera = function(){
     }
     
     this.background.x = this.pig.x - 200;
-    
 };
 
 BasicGame.Game.prototype.destructAttack = function(bullet, platform){
