@@ -16,6 +16,8 @@ BasicGame = {
     wheat:'img/wheat.png',
     bush:'img/arbusto.png',
     loader_image:'img/load.png',
+    corn:'img/mazorca.png',
+    apple:'img/manzana.png',
 
     game_background_image:'img/background.png',
     game_platform_image:'img/box-sand.png',

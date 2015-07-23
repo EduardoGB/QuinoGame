@@ -12,6 +12,7 @@ BasicGame.Game.prototype.renderControls = function(){
         this.appleCount.y   = this.pig.y-380
         this.appleText.y    = this.pig.y-360;
     }
+    
     this.smilesun.x     = this.pig.x+500;   
     this.cornCount.x    = this.pig.x-200;
     this.cornText.x     = this.pig.x-150;
@@ -28,10 +29,11 @@ BasicGame.Game.prototype.resetVars = function(){
     this.plataformChange    = 20;
     this.plataformHeight    = 50;
     this.plataformWidth     = 150;
+    this.grassDiff          = 0;
 
     this.lastPlatform       = 0;
     this.plataformCount     = 1;
-    this.plataformsNum      = 6;
+    this.plataformsNum      = 20;
     this.diff               = 0;
     /******Score points**************/
     this.score              = 0;

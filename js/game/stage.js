@@ -1,4 +1,3 @@
-//
 BasicGame.Game.prototype.addSounds = function(){
     this.music = this.add.audio('sound',1,true);
     this.eat = this.add.audio('eat',1);
@@ -14,12 +13,18 @@ BasicGame.Game.prototype.addGameBackground = function(){
 };
 
 //Add moves to the background images 
-BasicGame.Game.prototype.addCorns = function(x, y){
-	this.corns.create(x+20,y-20, 'corn');
-    this.corns.setAll('body.allowGravity', false);
-    this.corns.setAll('scale.x', .3);
-    this.corns.setAll('scale.y', .3);
-    this.corns.setAll('body.immovable', true);
+BasicGame.Game.prototype.addCorns = function(x, y,key){
+    if(key == "mud") {
+        y = y-100;  
+        this.corns.create(x,y-80, 'apple');
+    } else {
+        this.corns.create(x,y-80, 'corn');
+    }
+    
+    this.corns.getTop().body.allowGravity = false;
+    this.corns.getTop().scale.x = .5;
+    this.corns.getTop().scale.y = .5;
+    //this.corns.getTop().body.immovable = true;
 };
 
 BasicGame.Game.prototype.addTexts = function(){
@@ -85,7 +90,7 @@ BasicGame.Game.prototype.addBackGrass = function(x){
     this.bush.getTop().body.allowGravity = false;
     this.bush.getTop().body.immovable = true;
     this.bush.getTop().scale.x = .5;
-    this.bush.getTop().visible = this.backgroundVisible();
+    //this.bush.getTop().visible = this.backgroundVisible();
 
     if(this.plataformCount%20 == 0) {
         this.bush.getTop().visible = false;
@@ -105,27 +110,35 @@ BasicGame.Game.prototype.removeBackGrass = function(){
 }
 
 BasicGame.Game.prototype.addBaseGrass = function(x) {   
-    this.ground.create(x, this.plataformYPosition, 'ground');
-    
-    // if (this.plataformCount%15 == 0) {
-        // this.grass.create(x, this.plataformYPosition-30, 'mud');
-    // }else{
+    var y = 0;
+    if (this.grassDiff >= 3 && this.backgroundVisible() && this.plataformCount > 2 && this.plataformCount < (this.plataformsNum-4)) {
+        this.grass.create(x, this.plataformYPosition-30, 'mud');
+        this.grass.getTop().body.allowGravity = false;
+        this.grass.getTop().body.immovable  = true;
+        this.grass.getTop().scale.y = 1.3;
+        this.grass.getTop().scale.x = .12;
+        this.grassDiff = 0;
+        y = 20;
+    }else{
+        this.grassDiff++;
         this.grass.create(x, this.plataformYPosition-30, 'grass');
-    // }
-
-    this.grass.getTop().body.allowGravity = false;
-    this.grass.getTop().body.immovable  = true;
-    this.grass.getTop().scale.y = .6;
-    this.grass.getTop().scale.x = .5;
-
+        this.grass.getTop().body.allowGravity = false;
+        this.grass.getTop().body.immovable  = true;
+        this.grass.getTop().scale.y = .6;
+        this.grass.getTop().scale.x = .5;
+    }
+    this.addCorns(x+5,this.plataformYPosition, this.grass.getTop().key);
+    this.addCorns(x+70,this.plataformYPosition, this.grass.getTop().key);
+    this.ground.create(x, this.plataformYPosition+y, 'ground');
     this.ground.getTop().body.allowGravity = false;
     this.ground.getTop().body.immovable = true;
-    this.ground.getTop().scale.y = 1.2;
+    this.ground.getTop().scale.y = 1.5;
     this.ground.getTop().scale.x =.5;
 };
 
 BasicGame.Game.prototype.addBaseGroups = function(x) {   
     this.ground     = this.add.physicsGroup();
+    this.corns          = this.add.physicsGroup();
     this.grass      = this.add.physicsGroup();
     this.mud        = this.add.physicsGroup();
 }
@@ -135,10 +148,9 @@ BasicGame.Game.prototype.addPlataforms = function() {
     this.superBullets   = this.add.physicsGroup();
     this.bullets        = this.add.physicsGroup();
     this.blocks         = this.add.physicsGroup();
-    this.corns          = this.add.physicsGroup();
     this.attack         = this.add.physicsGroup();
-    
     this.addBaseGroups();
+    
     for(var x=0 ; x <= (10*this.plataformWidth); x+=this.plataformWidth){
         this.addBaseGrass(x);
     }
@@ -159,8 +171,9 @@ BasicGame.Game.prototype.updateGroundAndGrass = function(){
         this.removeBackGrass();
         
         this.plataformCount++;
-        if(this.plataformCount%10==0){
+        if(this.plataformCount == this.plataformsNum){
             this.plataformYPosition += this.selectPlatform();    
+            this.plataformCount = 0;
         }
         var nextX = this.ground.getTop().x + this.plataformWidth;           
         this.addBackGrass(nextX-70);

@@ -26,13 +26,12 @@ BasicGame.Preloader.prototype = {
         this.load.image('cloud1_image', BasicGame.game_cloud1_image);
         this.load.image('cloud2_image', BasicGame.game_cloud2_image);
         this.load.image('cloud3_image', BasicGame.game_cloud3_image);
+        this.load.image('corn', BasicGame.corn);
+        this.load.image('apple', BasicGame.apple);
 
         this.load.image('gameBackground', BasicGame.game_background_image);
 
         this.load.image('playButton', 'img/image.png');
-
-        this.load.image('corn', 'img/maiz.png');
-        this.load.image('apple', 'img/manzana.png');
 
         this.load.image('bullet', 'img/elote.png');
         this.load.image('super_bullet', 'img/elote.png');

@@ -4,13 +4,13 @@ BasicGame.Game.prototype.attackPig = function(){
 		// console.log(desicion);
 		switch(desicion){
 			case 'block':
-				this.addBlock(this.pig.x +4000,this.plataformYPosition-30);
+				//this.addBlock(this.pig.x +4000,this.plataformYPosition-30);
 				break;
 			case 'floor':
-				this.floorAttack = true;
+				//this.floorAttack = true;
 				break;
 			case 'red':
-        		this.addAttack();
+        		//this.addAttack();
 				break;
 			default:
 				break;
