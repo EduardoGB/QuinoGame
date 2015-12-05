@@ -76,3 +76,29 @@ BasicGame.Game.prototype.setPoints = function(pig, corn){
     }
     corn.kill();
 };
+
+var RIGHT = 0, LEFT = 1;
+
+/* Divide the current tap x coordinate to half the game.width, floor it and there you go */
+game.input.onTap.add(function(e){
+    if (Math.floor(e.x/(this.game.width/2)) === LEFT) {
+        //do left stuff
+    }
+
+    if (Math.floor(e.x/(this.game.width/2)) === RIGHT) {
+        //do right stuff
+    }
+}); 
+
+
+
+//This is inside your update function
+if ((cursors.up.isDown || onSwipe()) && player.body.touching.down)
+  {
+      player.body.velocity.y = -350;
+  }
+ 
+//This can be placed outside
+function onSwipe() {
+  return (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250);
+}
